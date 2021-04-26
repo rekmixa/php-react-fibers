@@ -9,9 +9,13 @@ ADD . /app
 
 RUN chown -R www-data:www-data /app
 
-RUN export PHP_AUTOCONF=/usr/bin/autoconf
+ENV PHP_AUTOCONF=/usr/bin/autoconf
+ENV PKG_CONFIG_PATH=/usr/lib/pkgconfig
 
 RUN apk update && apk upgrade
+RUN apk add --no-cache pkgconfig
+RUN pkg-config --variable pc_path pkg-config
+
 RUN apk add --no-cache \
         php8-pear \
         autoconf \
@@ -22,9 +26,18 @@ RUN apk add --no-cache \
         libsodium-dev
 
 RUN pecl install \
+        gd \
         opcache \
-        libsodium-stable
+        libsodium-stable \
+        apcu \
+        apc
 
 RUN docker-php-ext-enable \
+        gd \
+        mysqli pdo pdo_mysql \
         opcache \
-        sodium
+        sodium \
+         --ini-name 0-apc.ini apcu apc
+
+RUN pecl install ext-fiber
+RUN docker-php-ext-enable ext-fiber
