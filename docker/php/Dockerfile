@@ -25,12 +25,11 @@ RUN apk add --no-cache \
         libsodium \
         libsodium-dev
 
-RUN pecl install \
-        gd \
-        opcache \
-        libsodium-stable \
-        apcu \
-        apc
+RUN pecl install gd
+RUN pecl install opcache
+RUN pecl install libsodium-stable
+RUN pecl install apcu
+RUN pecl install apc
 
 RUN docker-php-ext-enable apcu.so opcache.so sodium.so
 RUN docker-php-ext-enable gd mysqli pdo pdo_mysql
