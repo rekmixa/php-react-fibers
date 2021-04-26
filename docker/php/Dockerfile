@@ -32,12 +32,9 @@ RUN pecl install \
         apcu \
         apc
 
-RUN docker-php-ext-enable \
-        gd \
-        mysqli pdo pdo_mysql \
-        opcache \
-        sodium \
-         --ini-name 0-apc.ini apcu apc
+RUN docker-php-ext-enable apcu.so opcache.so sodium.so
+RUN docker-php-ext-enable gd mysqli pdo pdo_mysql
+RUN docker-php-ext-enable --ini-name 0-apc.ini apcu apc
 
 RUN pecl install ext-fiber
 RUN docker-php-ext-enable ext-fiber
