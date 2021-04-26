@@ -10,12 +10,8 @@ ADD . /app
 RUN chown -R www-data:www-data /app
 
 ENV PHP_AUTOCONF=/usr/bin/autoconf
-ENV PKG_CONFIG_PATH=/usr/lib/pkgconfig
 
 RUN apk update && apk upgrade
-RUN apk add --no-cache pkgconfig
-RUN pkg-config --variable pc_path pkg-config
-
 RUN apk add --no-cache \
         php8-pear \
         autoconf \
@@ -23,15 +19,32 @@ RUN apk add --no-cache \
         libtool \
         build-base \
         libsodium \
-        libsodium-dev
+        libsodium-dev \
+        freetype-dev \
+        libjpeg-turbo-dev \
+        libpng-dev
 
-RUN pecl install gd
-RUN pecl install opcache
-RUN pecl install libsodium-stable
-RUN pecl install apcu
-RUN pecl install apc
+RUN docker-php-ext-configure gd \
+        --with-freetype=/usr/include/ \
+        --with-jpeg=/usr/include/ \
+        && docker-php-ext-install -j$(nproc) gd \
+        && docker-php-ext-enable gd \
+        && apk del --no-cache \
+        freetype-dev \
+        libjpeg-turbo-dev \
+        libpng-dev \
+        && rm -rf /tmp/*
 
-RUN docker-php-ext-enable apcu.so opcache.so sodium.so
+RUN pecl install opcache \
+        libsodium-stable \
+        apcu
+        # apc
+
+RUN docker-php-ext-install \
+        mysqli \
+        pdo pdo_mysql
+
+RUN docker-php-ext-enable gd.so opcache.so sodium.so
 RUN docker-php-ext-enable gd mysqli pdo pdo_mysql
 RUN docker-php-ext-enable --ini-name 0-apc.ini apcu apc
 
