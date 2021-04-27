@@ -1,4 +1,9 @@
+all: up
+
 up:
+	@docker-compose up -d --remove-orphans
+
+up-build:
 	@docker-compose up -d --build --remove-orphans
 
 install: dotenv-config up composer-install composer-dump-autoload
