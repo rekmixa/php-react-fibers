@@ -3,7 +3,9 @@
     "description": "PHP 8 & Nginx with Docker",
     "require": {
         "php": ">=8.0.3",
-        "trowski/react-fiber": "dev-master"
+        "trowski/react-fiber": "dev-master",
+        "react/http": "^1.3.0",
+        "react/stream": "^1.1.1"
     },
     "scripts": {}
 }
