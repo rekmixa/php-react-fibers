@@ -2,8 +2,8 @@
     "name": "docker/php8-nginx",
     "description": "PHP 8 & Nginx with Docker",
     "require": {
-        "php": ">=8.0.3"
+        "php": ">=8.0.3",
+        "trowski/react-fiber": "dev-master"
     },
-    "require-dev": {},
     "scripts": {}
 }
