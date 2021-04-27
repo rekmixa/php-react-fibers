@@ -10,3 +10,5 @@ $loop = new FiberLoop(Factory::create());
 $loop->await($loop->async(static function () {
   echo 'Hello, World!' . PHP_EOL;
 }));
+
+var_dump(var_dump(opcache_get_status()['jit']));
