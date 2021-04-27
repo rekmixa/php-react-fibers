@@ -9,8 +9,6 @@ services:
     working_dir: /app
     volumes:
       - ./docker/php/10-php.ini:/usr/local/etc/php/conf.d/10-php.ini
-      - ./docker/php/10-fiber.ini:/usr/local/etc/php/conf.d/10-docker-php-ext-fiber.ini
-      - ./docker/php/10-opcache.ini:/usr/local/etc/php/conf.d/10-docker-php-ext-opcache.ini
       - ~/.composer-docker/cache:/var/www/.composer/cache:delegated
       - ./:/app
     environment:
