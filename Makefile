@@ -1,7 +1,7 @@
 all: up
 
 up:
-	@docker-compose up -d --remove-orphans
+	@docker-compose up -d --force-recreate --remove-orphans
 
 up-build:
 	@docker-compose up -d --build --remove-orphans
